@@ -1,0 +1,16 @@
+#context-bar {
+    right: 0;
+    top: 0;
+    position: absolute;
+    background-color: black;
+    width: 3vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    transition: width 0.4s;
+}
+
+#context-bar:hover {
+    width: 15vw;
+    transition: width 0.4s;
+}
