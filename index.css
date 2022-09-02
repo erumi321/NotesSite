@@ -2,22 +2,26 @@
     --page-size-mult: 1.2;
 }
 
+body {
+    background-color: #121218;
+}
+
 #context-bar {
     right: -15vw;
     top: 0;
     position: fixed;
-    background-color: black;
-    width: 18vw;
+    background-color: #121213;
+    width: 15vw;
     height: 100vh;
     margin: 0;
     padding: 0;
-    transition: right 0.4s;
+    transition: right 1s ease-in-out;
     z-index: 1;
 }
 
 #context-bar:hover {
     right: 0vw;
-    transition: right 0.4s;
+    transition: right 1s ease-in-out;
 }
 
 .main-text {
@@ -32,4 +36,56 @@
 	overflow: hidden;
 	box-sizing: border-box;
     font-size: 14px;
+}
+
+.context-leftbar {
+    position: absolute;
+    background-color: #1e1e1e;
+    width: 3vw;
+    height: 94vh;
+    top: 0;
+    bottom: 0;
+    left: -3vw;
+    margin: auto 0;
+}
+
+.leftbar-top {
+    position: absolute;
+    left: 0;
+    top: -3vh;
+    width: 3vw;
+    height: 3vw;
+    z-index: -1;
+    background-color: inherit;
+    border-radius: 50% 0;
+}
+
+.leftbar-bottom {
+    position: absolute;
+    left: 0;
+    bottom: -3vh;
+    width: 3vw;
+    height: 3vw;
+    z-index: -1;
+    background-color: inherit;
+    border-radius: 0 50%;
+}
+
+.context-card {
+    width: 85%;
+    margin: 1vh auto 0 auto;
+    border-radius: 9%;
+    background-color: #1e1e1e;
+    padding: 0.9vh 0.4vw;
+    text-align: center;
+}
+
+.context-card-image {
+    width: 60%;
+}
+
+.context-card * {
+    padding: 0;
+    margin: 0;
+    overflow-wrap: break-word;
 }
