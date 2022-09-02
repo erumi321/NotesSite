@@ -5,21 +5,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="index.css">
-
+    <script async defer src="https://accounts.google.com/gsi/client"></script>
     <title>Notes</title>
 </head>
     <body>
+    
+        <script src="https://unpkg.com/jwt-decode/build/jwt-decode.js"></script>
+        <script src="googleAPI.js"></script>
+        <div id="g_id_onload"
+            data-client_id="961981860273-m3c4b6mcqrhn23jpiqn4nc9ahncbt0jn.apps.googleusercontent.com"
+            data-context="signin"
+            data-callback="initClient"
+            data-auto_select="true"
+            data-itp_support="true">
+        </div>
         <div id="context-bar" class="context-bar">
 
         </div>
 
-        <div class="auth-buttons">
-          <button id="auth-signin" class="auth-signin">Sign In</button>
-          <button id="auth-signout" class="auth-signout">Sign Out</button>
-        </div>
-    
+        <textarea id="main-text" class="main-text"></textarea>
         <script src="index.js"></script>
 
-        <script src="https://apis.google.com/js/api.js"></script>
+        <!-- <h1>Google Identity Services Authorization Token model</h1>
+        <button onclick="getToken();">Get access token</button><br><br>
+        <button onclick="createFile();">Create File</button><br><br>
+        <button onclick="revokeToken();">Revoke token</button> -->
+
     </body>
 </html>

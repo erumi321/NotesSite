@@ -1,16 +1,35 @@
+:root {
+    --page-size-mult: 1.2;
+}
+
 #context-bar {
-    right: 0;
+    right: -15vw;
     top: 0;
-    position: absolute;
+    position: fixed;
     background-color: black;
-    width: 3vw;
+    width: 18vw;
     height: 100vh;
     margin: 0;
     padding: 0;
-    transition: width 0.4s;
+    transition: right 0.4s;
+    z-index: 1;
 }
 
 #context-bar:hover {
-    width: 15vw;
-    transition: width 0.4s;
+    right: 0vw;
+    transition: right 0.4s;
+}
+
+.main-text {
+    position: absolute;
+    width: calc(97vh * (8/11) * var(--page-size-mult));
+    min-height: calc(97vh * var(--page-size-mult));
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+	resize: none;
+	padding: 5px;
+	overflow: hidden;
+	box-sizing: border-box;
+    font-size: 14px;
 }
