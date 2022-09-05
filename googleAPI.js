@@ -13,7 +13,8 @@ function initClient() {
         prompt: '',
         scope: 'https://www.googleapis.com/auth/drive'
     });
-    getToken();
+    //getToken();
+    loadDrivePages();
 }
 function getToken() {
     client.requestAccessToken();
@@ -44,8 +45,14 @@ function loadDrivePages(pageToken) {
     xhr.open('GET', requestURL);
     xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
     xhr.setRequestHeader('Accept', 'json');
+
     xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4) {
+        if (xhr.status === 401 && xhr.readyState == 4) {
+            alert("You need a new token. After the pop-up closes press the refresh button.");
+            getToken();
+            return;
+        }
+        if (xhr.readyState === 4 && xhr.status != 401) {
             var xhrJson = JSON.parse(xhr.response);
             
             cardContainer = document.getElementById("context-bar").children[1];
@@ -60,9 +67,10 @@ function loadDrivePages(pageToken) {
 
                 var container = document.createElement('div');
                 container.classList.add('context-card');
+                container.setAttribute('onclick', 'selectDoc(this, "' + file.id + '")');
 
                 var text = document.createElement('p');
-                text.innerText = xhrJson.files[i].name + " : " + file.id;
+                text.innerText = xhrJson.files[i].name;
 
                 container.appendChild(text);
                 cardContainer.appendChild(container);
@@ -74,6 +82,7 @@ function loadDrivePages(pageToken) {
             }
         }
     }
+
     xhr.send();
 } 
 
@@ -150,4 +159,35 @@ function writeDriveDoc(id, startLocation = 1, content, callback) {
         ]
       }
     sendBatchUpdate(id, JSON.stringify(requestData).replace(/\\"/g, '"'), callback);
+}
+
+function getDriveDocText(id, callback) {
+    var getXhr = new XMLHttpRequest();
+
+    getXhr.open('GET', 'https://docs.googleapis.com/v1/documents/' + id + '?fields=title,body.content&key=' + API_KEY);
+    getXhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
+    getXhr.setRequestHeader('Accept', 'application/json');
+    getXhr.onreadystatechange = () => {
+        if (getXhr.readyState === 4) {
+            console.log(getXhr.response)
+
+            var xhrJSON = JSON.parse(getXhr.response);
+
+            var text = "";
+
+            xhrJSON.body.content.forEach((item) => {
+                if (item.hasOwnProperty('paragraph')) {
+                    item.paragraph.elements.forEach((element) => {
+                        if (element.hasOwnProperty('textRun') && element.textRun.hasOwnProperty('content')) {
+                            text += element.textRun.content;
+                        }
+                    })
+                }
+            });
+
+            callback(text);
+        }
+    }
+
+    getXhr.send();
 }
